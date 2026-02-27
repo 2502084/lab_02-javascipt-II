@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+</head>
+<body>
+    <script>
+    
+const fastPromise = new Promise((resolve) => {
+  setTimeout(() => resolve("Fast Promise Wins! (1 second)"), 1000);
+});
+
+const slowPromise = new Promise((resolve) => {
+  setTimeout(() => resolve("Slow Promise Wins! (3 seconds)"), 3000);
+});
+
+
+Promise.race([fastPromise, slowPromise])
+  .then((winner) => {
+    
+    console.log("The winner is:", winner);
+  })
+  .catch((error) => {
+    console.error("Race failed:", error);
+  });
+    </script>
+</body>
+</html>

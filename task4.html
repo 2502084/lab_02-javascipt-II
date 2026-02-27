@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+</head>
+<body>
+    <script>
+const getProducts = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log("Fetching product list...");
+      resolve([101, 102, 103]);
+    }, 1000);
+  });
+};
+
+const getProductDetails = (productId) => {
+  return new Promise((resolve, reject) => { // 'reject' parameter add kiya
+    
+    // Yahan hum error simulate kar rahe hain
+    const networkError = true; 
+
+    setTimeout(() => {
+      if (networkError) {
+        // Agar error true hai, to promise reject ho jayega
+        reject(`Failed to fetch details for product ${productId}: Server Unreachable.`);
+      } else {
+        console.log(`Fetching details for product ${productId}`);
+        resolve({ id: productId, name: "Laptop", price: 50000 });
+      }
+    }, 1000);
+  });
+};
+
+// Promise Chain
+getProducts()
+  .then((products) => {
+    // Pehla product pick kar rahe hain
+    return getProductDetails(products[0]);
+  })
+  .then((details) => {
+    // Agar sab theek raha to ye chalega
+    console.log("Product details:", details);
+  })
+  .catch((error) => {
+    // Agar getProducts ya getProductDetails mein se koi bhi fail hua,
+    // to ye single .catch() block usay handle karega.
+    console.error("Error occurred in the chain:", error);
+  });
+    </script>
+</body>
+</html>
